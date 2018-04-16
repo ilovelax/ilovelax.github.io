@@ -54,7 +54,7 @@ html, body{height:100%;}
         $(function() {
 			// 获取来源
 			var index = location.href.lastIndexOf("?");
-			var source = index != -1 ? location.href.substring(index + 1) : getSource();
+			var source = index != -1 ? decodeURI(location.href.substring(index + 1)) : getSource();
             var text = $('#myEditor');
         	// 新建WebSocket对象
 	        var socket;
