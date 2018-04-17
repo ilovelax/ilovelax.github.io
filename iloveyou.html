@@ -8,6 +8,7 @@
   <title>我的告白</title>
   <style type="text/css">
     @font-face {font-family:'RuiHeiXiTi';src:url('./RuiHeiXiTi.otf') format('truetype');font-weight:bold;font-style:normal}
+    #chat-div{z-index:2000;position: fixed;left: 0;right: 0;display: none;width: 28px;height: 28px;}
   </style>
   <link rel="stylesheet" href="http://veasion.oss-cn-shanghai.aliyuncs.com/luoaxin/love.css" />
   </head>
@@ -329,6 +330,11 @@
           setTimeout(function(){
             Flowtime.toggleOverview(true);
             clickCount = 0;
+            if(!$("#chat-div").is(':visible')){
+                setTimeout(function(){
+                    showChat();
+                }, 1000);
+            }
           }, 100);
         }
         if(cancelDemoClick > 4){
@@ -336,6 +342,22 @@
           $("#code").show();
           canClick = true;
         }
+      }
+
+      function showChat(){
+        $("#chat-div").show();
+        var left=$(window).width()-$("#chat-div").width()-5,top=$(window).height()/2-20;
+        $("#chat-div").css({left:left,top:top});
+        var count = 0;
+        var tempInt = setInterval(function(){
+            $("#chat-div").css("left", count%2==0 ? left+5 : left-5);
+            ++count;
+            if(count>5){
+                count=0;
+                clearInterval(tempInt);
+                $("#chat-div").css("left", left);
+            }
+        }, 200);
       }
   </script>
   <div class="ft-default-progress">
@@ -414,5 +436,6 @@
     </div>
   </div>
   <div class="mPower"><span id="on" title="点击暂停" ontouchend="this.onclick();"></span><span id="off" title="点击播放" ontouchend="this.onclick();"></span></div>
+  <img id="chat-div" onclick="location.href='http://luoaxin.com/chat.html';" ontouchend="this.onclick();" alt="留言" src="http://luoaxin.oss-cn-shanghai.aliyuncs.com/chat.png" />
 </body>
 </html>
